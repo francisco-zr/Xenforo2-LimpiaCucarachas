@@ -1,0 +1,1 @@
+API key for the endpoint above. If empty, the AI spam check is disabled entirely.

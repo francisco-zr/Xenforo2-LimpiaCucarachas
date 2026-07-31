@@ -1,0 +1,41 @@
+{
+    "foroplLcApiKey.json": {
+        "hash": "26c660f0e70e10c8176afbf8dc8f26b2"
+    },
+    "foroplLcApiUrl.json": {
+        "hash": "0bd149fe4d81b26a6b25f8a57775e6c8"
+    },
+    "foroplLcDomainWhitelist.json": {
+        "hash": "d2d96c38bef850c134180c15dc62269b"
+    },
+    "foroplLcEnabled.json": {
+        "hash": "bff676ebf7c8833970ee3632591a5707"
+    },
+    "foroplLcLogRetentionDays.json": {
+        "hash": "ceb07fc64b0d86bc27d79d2e67188a66"
+    },
+    "foroplLcMaxAccountAgeDays.json": {
+        "hash": "e318374089f479156e6167ad1f4ff566"
+    },
+    "foroplLcMaxChars.json": {
+        "hash": "8b3e07ec6b6e5c56ea675186892d3309"
+    },
+    "foroplLcMaxQueuedMessages.json": {
+        "hash": "5daf0f014cdfffff68fd12b024779629"
+    },
+    "foroplLcMaxTokens.json": {
+        "hash": "856ee064f10cef35f83e16500e4dfb0d"
+    },
+    "foroplLcModel.json": {
+        "hash": "ec3bb62687b3104f927bb191c649554e"
+    },
+    "foroplLcRequireLink.json": {
+        "hash": "0bc2fcef392ded208b1d409577dc22aa"
+    },
+    "foroplLcSystemPrompt.json": {
+        "hash": "4cbe3eb3bda3e06bd53d938eb3262a28"
+    },
+    "foroplLcTimeout.json": {
+        "hash": "edc987a971c98e6ef65c7768a8082da9"
+    }
+}

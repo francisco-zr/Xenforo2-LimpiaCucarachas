@@ -1,0 +1,9 @@
+{
+    "event_id": "spam_content_providers",
+    "execute_order": 10,
+    "callback_class": "foroPL\\LimpiaCucarachas\\Listener",
+    "callback_method": "spamContentProviders",
+    "active": true,
+    "hint": "",
+    "description": "Registers the LimpiaCucarachas AI content spam checker"
+}

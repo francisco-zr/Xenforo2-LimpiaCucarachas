@@ -1,0 +1,1 @@
+AI spam check flagged this message: {reason}

@@ -1,0 +1,1 @@
+User already has {count} messages pending moderation; further submissions are blocked

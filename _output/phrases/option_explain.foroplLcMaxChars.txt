@@ -1,0 +1,1 @@
+Messages longer than this many characters are truncated before being sent to the AI.

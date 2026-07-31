@@ -1,0 +1,1 @@
+When enabled, the AI is only called for messages containing a link. Disable to check every message posted by recent accounts (higher API cost).

@@ -1,0 +1,60 @@
+# Xenforo2-[ForoPL] Limpia Cucarachas
+
+A XenForo 2.3 add-on that stops the classic overnight spammer: a fresh account posts a few harmless messages to get past XenForo's spam checks, then floods the forum with link spam until a moderator wakes up.
+
+It uses an AI model to judge suspicious messages — with near-zero cost and zero impact on normal traffic.
+
+## How it works
+
+When a **recently registered account** posts a message **containing a link**, the message is sent to an AI model with a spam-classification prompt:
+
+- **Spam verdict** — the message goes to the approval queue, with the AI's reasoning visible to moderators in the spam trigger log.
+- **Clean verdict** — the message is posted normally. Legitimate new users who share a link are not punished.
+- **API down or unreachable** — fail-closed: the suspicious message is held for moderation anyway, so an API outage never opens the door to spam.
+
+### Flood protection
+
+If a recent account already has several messages sitting in the moderation queue, further submissions are **blocked outright** — no AI call needed. A spammer dumping 100 messages gets stopped after the first few, and your approval queue stays manageable.
+
+### Closes the message-count loophole
+
+XenForo only spam-checks users below the *"Maximum messages to check for spam"* threshold, which spammers bypass by posting a few innocent messages first. This add-on re-enables all spam checks (including your spam phrases and Akismet, if configured) for any account younger than a configurable number of days, regardless of message count.
+
+## AI provider
+
+Works with **any OpenAI-compatible chat completions API**. Just set the endpoint URL, API key and model name in the options:
+
+- **[OpenCode Zen](https://opencode.ai/)** — default configuration. The `big-pickle` test model is **free**, so you can try the add-on without spending anything.
+- **DeepSeek** (`https://api.deepseek.com/chat/completions`, model `deepseek-chat`) — extremely cheap per-call pricing.
+- OpenRouter, OpenAI, or any other compatible endpoint.
+
+Since the AI is only called for recent accounts posting links, a typical forum makes a handful of calls per day — cost is effectively zero.
+
+## Verdict log
+
+Every AI decision (spam, clean, flood-block or API error) is recorded with its reason, response time and a snippet of the message, browsable under **Admin CP → Logs → Spam → Limpia Cucarachas**. Entries are cleaned up automatically after a configurable number of days.
+
+## Options
+
+All thresholds are configurable under **Admin CP → Options → [ForoPL] Limpia Cucarachas**:
+
+- Account age to check (days)
+- Queued messages before blocking
+- Only check messages containing links (on/off)
+- API endpoint URL, key and model
+- Request timeout, response token budget, message truncation
+- Log retention (days)
+- Custom system prompt (advanced)
+
+## Performance
+
+Built for large forums:
+
+- Zero added queries and zero HTTP calls for normal traffic — the add-on only wakes up for recent accounts.
+- No template modifications, no JavaScript, no hooks on hot code paths.
+- Failures are logged in the add-on's own log, not the server error log.
+
+## Requirements
+
+- XenForo 2.3+
+- An API key for any OpenAI-compatible endpoint (OpenCode Zen's free tier works)

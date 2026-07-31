@@ -1,0 +1,1 @@
+Accounts registered within this many days are subject to the AI spam check, even after they have passed the 'Maximum messages to check for spam' threshold.

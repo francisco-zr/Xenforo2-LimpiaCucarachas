@@ -1,0 +1,1 @@
+If a recent account already has at least this many messages pending moderation, further submissions are blocked outright without calling the AI.

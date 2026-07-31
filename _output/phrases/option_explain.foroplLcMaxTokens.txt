@@ -1,0 +1,1 @@
+Token budget for the AI response (max_tokens). Reasoning models (e.g. deepseek-v4-pro) spend tokens thinking before answering, so low values can cut them off before the verdict is written. 2000 is a safe default.

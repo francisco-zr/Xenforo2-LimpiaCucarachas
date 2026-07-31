@@ -1,0 +1,27 @@
+<xf:title>{{ phrase('foropl_lc_log') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body block-row">
+			<ul class="listInline listInline--bullet">
+				<li><span class="u-dimmed">{{ phrase('action:') }}</span> {{ phrase_dynamic('foropl_lc_verdict_' . $entry.verdict) }}</li>
+				<xf:if is="$entry.reason">
+					<li class="u-dimmed">{$entry.reason}</li>
+				</xf:if>
+			</ul>
+			<ul class="listInline listInline--bullet u-muted">
+				<li class="u-muted">{{ phrase('generated_by:') }} {{ $entry.User ? '<a href="' . link('users/edit', $entry.User) . '">' . $entry.User.username . '</a>' : phrase('unknown_account') }}</li>
+				<li><xf:date time="$entry.log_date" /></li>
+				<li>{{ $xf.app.getContentTypePhrase($entry.content_type) ?: $entry.content_type }}</li>
+				<xf:if is="$entry.response_ms">
+					<li>{$entry.response_ms}ms</li>
+				</xf:if>
+			</ul>
+		</div>
+
+		<h3 class="block-minorHeader">{{ phrase('message') }}</h3>
+		<div class="block-body block-body--contained block-row">
+			{$entry.snippet}
+		</div>
+	</div>
+</div>

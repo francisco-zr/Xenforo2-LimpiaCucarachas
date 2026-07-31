@@ -1,0 +1,11 @@
+{
+    "parent_navigation_id": "logsSpam",
+    "display_order": 1300,
+    "link": "logs/limpia-cucarachas",
+    "icon": "",
+    "admin_permission_id": "viewLogs",
+    "debug_only": false,
+    "development_only": false,
+    "super_admin_only": false,
+    "hide_no_children": false
+}

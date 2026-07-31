@@ -1,0 +1,37 @@
+<xf:title>{{ phrase('foropl_lc_log') }}</xf:title>
+
+<xf:if is="$entries is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$entries" value="$entry">
+						<xf:datarow
+							label="{{ $entry.User ? $entry.User.username : phrase('unknown_account') }} - {{ $entry.reason ?: phrase_dynamic('foropl_lc_verdict_' . $entry.verdict) }}"
+							href="{{ link('logs/limpia-cucarachas', $entry) }}"
+							overlay="true">
+							<xf:explain>
+								<ul class="listInline listInline--bullet">
+									<li>{{ phrase_dynamic('foropl_lc_verdict_' . $entry.verdict) }}</li>
+									<li><xf:date time="$entry.log_date" /></li>
+									<li>{{ $xf.app.getContentTypePhrase($entry.content_type) ?: $entry.content_type }}</li>
+									<xf:if is="$entry.response_ms">
+										<li>{$entry.response_ms}ms</li>
+									</xf:if>
+								</ul>
+							</xf:explain>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+			</div>
+		</div>
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="logs/limpia-cucarachas"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('no_entries_have_been_logged') }}</div>
+</xf:if>

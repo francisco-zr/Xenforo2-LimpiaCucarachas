@@ -1,0 +1,1 @@
+Model name sent to the endpoint, e.g. big-pickle (OpenCode Zen free test model) or deepseek-chat.

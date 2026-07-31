@@ -1,0 +1,1 @@
+Full URL of an OpenAI-compatible chat completions endpoint, e.g. https://opencode.ai/zen/v1/chat/completions (OpenCode Zen) or https://api.deepseek.com/chat/completions.

@@ -1,0 +1,23 @@
+{
+    "legacy_addon_id": "",
+    "title": "[ForoPL] Limpia Cucarachas",
+    "description": "AI-powered spam filtering for recently registered accounts. Sends suspicious link posts to an OpenAI-compatible endpoint (e.g. DeepSeek) for a spam verdict and blocks moderation-queue flooding.",
+    "version_id": 1000070,
+    "version_string": "1.0.0",
+    "dev": "Rhodium",
+    "dev_url": "https://foropl.com",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [
+            "2030070",
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "7.2.0",
+            "PHP 7.2.0+"
+        ]
+    },
+    "icon": "fa-bug"
+}

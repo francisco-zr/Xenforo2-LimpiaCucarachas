@@ -1,0 +1,1 @@
+One domain per line (subdomains included). Messages whose links all point to whitelisted domains skip the AI check, saving API calls. This forum's own domain is always whitelisted automatically.
