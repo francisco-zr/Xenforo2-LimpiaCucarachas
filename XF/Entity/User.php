@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace foroPL\LimpiaCucarachas\XF\Entity;
 
+use XF\Mvc\Entity\Structure;
+
 class User extends XFCP_User
 {
 	public function isSpamCheckRequired()
@@ -29,8 +31,43 @@ class User extends XFCP_User
 			return false;
 		}
 
-		$maxAgeDays = (int) $options->foroplLcMaxAccountAgeDays;
+		return $this->foroplLcIsWatched();
+	}
 
-		return $this->register_date >= (\XF::$time - $maxAgeDays * 86400);
+	/**
+	 * Whether this user is inside the AI watch window: a configurable number
+	 * of days counted from their first message (not from registration), so
+	 * dormant accounts are still watched once they start posting.
+	 */
+	public function foroplLcIsWatched()
+	{
+		if (!$this->user_id)
+		{
+			return false;
+		}
+
+		$window = (int) $this->app()->options()->foroplLcMaxAccountAgeDays * 86400;
+
+		$firstPostDate = $this->foropl_lc_first_post_date;
+		if ($firstPostDate)
+		{
+			return (\XF::$time - $firstPostDate) < $window;
+		}
+
+		if (!$this->message_count)
+		{
+			return true;
+		}
+
+		return $this->register_date >= (\XF::$time - $window);
+	}
+
+	public static function getStructure(Structure $structure)
+	{
+		$structure = parent::getStructure($structure);
+
+		$structure->columns['foropl_lc_first_post_date'] = ['type' => self::UINT, 'default' => 0];
+
+		return $structure;
 	}
 }

@@ -19,13 +19,25 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 
 	public function check(User $user, $message, array $extraParams = [])
 	{
-		if (!$this->isRecentAccount($user))
+		$contentType = $extraParams['content_type'] ?? '';
+
+		// The contact form has no approval queue: a 'moderated' decision
+		// silently discards the email, so the AI must never judge it.
+		if ($contentType === 'contact' || !$user->user_id)
 		{
 			$this->logDecision('allowed');
 			return;
 		}
 
-		$contentType = $extraParams['content_type'] ?? '';
+		if (!$user->foropl_lc_first_post_date)
+		{
+			$user->fastUpdate('foropl_lc_first_post_date', \XF::$time);
+		}
+		elseif (!$user->foroplLcIsWatched())
+		{
+			$this->logDecision('allowed');
+			return;
+		}
 
 		$queuedCount = $this->getModeratedContentCount($user);
 		if ($queuedCount >= $this->app()->options()->foroplLcMaxQueuedMessages)
@@ -78,13 +90,6 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 
 	public function submitHam($contentType, $contentIds)
 	{
-	}
-
-	protected function isRecentAccount(User $user): bool
-	{
-		$maxAgeDays = (int) $this->app()->options()->foroplLcMaxAccountAgeDays;
-
-		return $user->register_date >= (\XF::$time - $maxAgeDays * 86400);
 	}
 
 	protected function hasSuspiciousLink(string $message): bool

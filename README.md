@@ -16,9 +16,11 @@ When a **recently registered account** posts a message **containing a link**, th
 
 If a recent account already has several messages sitting in the moderation queue, further submissions are **blocked outright** — no AI call needed. A spammer dumping 100 messages gets stopped after the first few, and your approval queue stays manageable.
 
-### Closes the message-count loophole
+### Closes the message-count loophole — and catches dormant accounts
 
-XenForo only spam-checks users below the *"Maximum messages to check for spam"* threshold, which spammers bypass by posting a few innocent messages first. This add-on re-enables all spam checks (including your spam phrases and Akismet, if configured) for any account younger than a configurable number of days, regardless of message count.
+XenForo only spam-checks users below the *"Maximum messages to check for spam"* threshold, which spammers bypass by posting a few innocent messages first. This add-on keeps all spam checks active (including your spam phrases and Akismet, if configured) for a configurable number of days **counted from the user's first message**, regardless of message count.
+
+Counting from the first message — not from registration — means sleeper accounts don't slip through: an account registered months in advance still gets the full watch window the day it starts posting.
 
 ## AI provider
 
@@ -38,7 +40,7 @@ Every AI decision (spam, clean, flood-block or API error) is recorded with its r
 
 All thresholds are configurable under **Admin CP → Options → [ForoPL] Limpia Cucarachas**:
 
-- Account age to check (days)
+- Days to watch after a user's first message
 - Queued messages before blocking
 - Only check messages containing links (on/off)
 - API endpoint URL, key and model

@@ -1,1 +1,1 @@
-Accounts registered within this many days are subject to the AI spam check, even after they have passed the 'Maximum messages to check for spam' threshold.
+Users are subject to the AI spam check for this many days counted from their first message (not from registration), so dormant accounts are still watched when they wake up and start posting. Users who have never posted are always checked.

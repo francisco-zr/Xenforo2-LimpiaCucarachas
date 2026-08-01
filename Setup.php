@@ -6,6 +6,7 @@ use XF\AddOn\AbstractSetup;
 use XF\AddOn\StepRunnerInstallTrait;
 use XF\AddOn\StepRunnerUninstallTrait;
 use XF\AddOn\StepRunnerUpgradeTrait;
+use XF\Db\Schema\Alter;
 use XF\Db\Schema\Create;
 
 class Setup extends AbstractSetup
@@ -32,8 +33,29 @@ class Setup extends AbstractSetup
 		});
 	}
 
+	public function installStep2()
+	{
+		$this->schemaManager()->alterTable('xf_user', function (Alter $table)
+		{
+			$table->addColumn('foropl_lc_first_post_date', 'int')->setDefault(0);
+		});
+	}
+
+	public function upgrade1000170Step1()
+	{
+		$this->installStep2();
+	}
+
 	public function uninstallStep1()
 	{
 		$this->schemaManager()->dropTable('xf_foropl_lc_log');
+	}
+
+	public function uninstallStep2()
+	{
+		$this->schemaManager()->alterTable('xf_user', function (Alter $table)
+		{
+			$table->dropColumns(['foropl_lc_first_post_date']);
+		});
 	}
 }
