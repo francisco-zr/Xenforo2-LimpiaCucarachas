@@ -1,1 +1,1 @@
-AI spam check flagged this message: {reason}
+AI spam check flagged this message: {reason} — Content submitted at the time: "{flagged}"

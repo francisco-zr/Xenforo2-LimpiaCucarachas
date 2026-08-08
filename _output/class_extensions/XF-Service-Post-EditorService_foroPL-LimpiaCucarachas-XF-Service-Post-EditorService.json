@@ -1,0 +1,6 @@
+{
+    "from_class": "XF\\Service\\Post\\EditorService",
+    "to_class": "foroPL\\LimpiaCucarachas\\XF\\Service\\Post\\EditorService",
+    "execute_order": 10,
+    "active": true
+}

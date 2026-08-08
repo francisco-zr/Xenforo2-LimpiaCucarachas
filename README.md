@@ -32,6 +32,10 @@ Works with **any OpenAI-compatible chat completions API**. Just set the endpoint
 
 Since the AI is only called for recent accounts posting links, a typical forum makes a handful of calls per day — cost is effectively zero.
 
+### Tamper-evident moderation
+
+The text that triggered the flag is stored with the spam log entry, so it stays visible in the approval queue even if the author rewrites the message while it is queued. Those rewrites are recorded too, so an innocent-looking message in the queue can always be checked against what was actually submitted.
+
 ## Verdict log
 
 Every AI decision (spam, clean, flood-block or API error) is recorded with its reason, response time and a snippet of the message, browsable under **Admin CP → Logs → Spam → Limpia Cucarachas**. Entries are cleaned up automatically after a configurable number of days.

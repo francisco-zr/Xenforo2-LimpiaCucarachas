@@ -12,3 +12,8 @@ namespace foroPL\LimpiaCucarachas\XF\Entity
 {
 	class XFCP_User extends \XF\Entity\User {}
 }
+
+namespace foroPL\LimpiaCucarachas\XF\Service\Post
+{
+	class XFCP_EditorService extends \XF\Service\Post\EditorService {}
+}

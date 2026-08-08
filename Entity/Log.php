@@ -34,7 +34,7 @@ class Log extends Entity
 			'user_id' => ['type' => self::UINT, 'default' => 0],
 			'content_type' => ['type' => self::BINARY, 'maxLength' => 25, 'default' => ''],
 			'verdict' => ['type' => self::BINARY, 'maxLength' => 25,
-				'allowedValues' => ['spam', 'ham', 'denied_flood', 'error'],
+				'allowedValues' => ['spam', 'ham', 'denied_flood', 'error', 'edited_in_queue'],
 				'default' => 'error',
 			],
 			'reason' => ['type' => self::STR, 'maxLength' => 255, 'default' => ''],

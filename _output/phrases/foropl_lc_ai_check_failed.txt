@@ -1,1 +1,1 @@
-AI spam check was unavailable or returned an invalid response; message held for moderator review
+AI spam check was unavailable or returned an invalid response; message held for moderator review — Content submitted at the time: "{flagged}"

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace foroPL\LimpiaCucarachas\Spam\Checker;
 
-use foroPL\LimpiaCucarachas\Entity\Log;
+use foroPL\LimpiaCucarachas\Repository\Log as LogRepository;
 use GuzzleHttp\Exception\TransferException;
 use XF\Entity\User;
 use XF\Spam\Checker\AbstractProvider;
@@ -64,7 +64,10 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			if ($verdict['spam'])
 			{
 				$this->logDecision('moderated');
-				$this->logDetail('foropl_lc_ai_detected_spam', ['reason' => $verdict['reason']]);
+				$this->logDetail('foropl_lc_ai_detected_spam', [
+					'reason' => $verdict['reason'],
+					'flagged' => $this->getFlaggedExcerpt($message),
+				]);
 			}
 			else
 			{
@@ -79,7 +82,9 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			$responseMs = (int) round((microtime(true) - $startTime) * 1000);
 
 			$this->logDecision('moderated');
-			$this->logDetail('foropl_lc_ai_check_failed');
+			$this->logDetail('foropl_lc_ai_check_failed', [
+				'flagged' => $this->getFlaggedExcerpt($message),
+			]);
 			$this->writeLog($user, $contentType, 'error', $e->getMessage(), $message, $responseMs);
 		}
 	}
@@ -257,23 +262,23 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		];
 	}
 
+	/**
+	 * Kept in the spam trigger details so moderators can see what was actually
+	 * submitted, even if the author edits the message while it sits in the queue.
+	 */
+	protected function getFlaggedExcerpt(string $message): string
+	{
+		$message = $this->app()->stringFormatter()->stripBbCode($message);
+		$message = trim(preg_replace('/\s+/u', ' ', $message));
+		$excerpt = mb_substr($message, 0, 300, 'utf-8');
+
+		return $excerpt === $message ? $excerpt : $excerpt . '…';
+	}
+
 	protected function writeLog(User $user, string $contentType, string $verdict, string $reason, string $message, int $responseMs = 0): void
 	{
-		try
-		{
-			/** @var Log $log */
-			$log = $this->app()->em()->create('foroPL\LimpiaCucarachas:Log');
-			$log->user_id = $user->user_id;
-			$log->content_type = $contentType;
-			$log->verdict = $verdict;
-			$log->reason = mb_substr($reason, 0, 250, 'utf-8');
-			$log->snippet = mb_substr($message, 0, 500, 'utf-8');
-			$log->response_ms = $responseMs;
-			$log->save();
-		}
-		catch (\Exception $e)
-		{
-			$this->app()->logException($e, false, 'LimpiaCucarachas log write error: ');
-		}
+		/** @var LogRepository $logRepo */
+		$logRepo = $this->app()->repository('foroPL\LimpiaCucarachas:Log');
+		$logRepo->logVerdict($user, $contentType, $verdict, $reason, $message, $responseMs);
 	}
 }

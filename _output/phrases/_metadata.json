@@ -226,5 +226,17 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": ""
+    },
+    "foropl_lc_verdict_edited_in_queue.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": ""
+    },
+    "foropl_lc_edited_after_flag.txt": {
+        "global_cache": false,
+        "version_id": 1000370,
+        "version_string": "1.0.3",
+        "hash": ""
     }
 }
