@@ -1,1 +1,1 @@
-If a recent account already has at least this many messages pending moderation, further submissions are blocked outright without calling the AI.
+If a recent account already has at least this many messages pending moderation or being checked, further submissions are blocked outright without calling the AI. In-flight checks are reserved atomically so simultaneous submissions cannot bypass the limit.

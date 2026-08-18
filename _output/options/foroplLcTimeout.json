@@ -1,12 +1,12 @@
 {
     "edit_format": "spinbox",
-    "edit_format_params": "min=1\nmax=30\nunits={{ phrase('units_seconds') }}",
+    "edit_format_params": "min=15\nmax=30\nunits={{ phrase('units_seconds') }}",
     "data_type": "positive_integer",
     "sub_options": [],
     "validation_class": "",
     "validation_method": "",
     "advanced": false,
-    "default_value": "8",
+    "default_value": "15",
     "relations": {
         "foroplLc": 80
     }

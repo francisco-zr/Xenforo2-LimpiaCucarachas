@@ -3,240 +3,246 @@
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+        "hash": "aaebd719e0f1f0a4b5f7658616b049e5"
     },
     "cron_entry.foroplLcCleanUp.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "1ffbadd95acff0b890251cf0d56b83fd"
+        "hash": "ad71bb77da8abbd0b6eaeefec2a9a3a3"
+    },
+    "cron_entry.foroplLcResCleanUp.txt": {
+        "global_cache": false,
+        "version_id": 1000470,
+        "version_string": "1.0.4",
+        "hash": "fb8782599d43f717a6c7f9398c32607d"
     },
     "foropl_lc_ai_check_failed.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": ""
+        "hash": "d96d1a256ea36dc60107d53ef57138c6"
     },
     "foropl_lc_ai_detected_spam.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "foropl_lc_log.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "foropl_lc_queue_flood.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "foropl_lc_verdict_denied_flood.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "foropl_lc_verdict_error.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "foropl_lc_verdict_ham.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "foropl_lc_verdict_spam.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "option.foroplLcApiKey.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "975a0ae2240c92ba212504509bd6a049"
-    },
-    "option.foroplLcApiUrl.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "af873cc68f1199486aafd9dacd074bcc"
-    },
-    "option.foroplLcDomainWhitelist.txt": {
-        "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
-        "hash": ""
-    },
-    "option.foroplLcEnabled.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "722c93fbcf523a8d5434cd89ccbc3f65"
-    },
-    "option.foroplLcLogRetentionDays.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "b1a672caff1153c47bf268fd8f46d28e"
-    },
-    "option.foroplLcMaxAccountAgeDays.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "c8f11acffe869dd0bcf99960ff4f67a3"
-    },
-    "option.foroplLcMaxChars.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "bd14234f283db2de53a476d1f056ac63"
-    },
-    "option.foroplLcMaxQueuedMessages.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "517a539a18e160aa167ee076015275a0"
-    },
-    "option.foroplLcMaxTokens.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "option.foroplLcModel.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "480f57cb9cd678c84f228c6e895884ab"
-    },
-    "option.foroplLcRequireLink.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "b5e2e56df9e2a9f6a820a0874382279f"
-    },
-    "option.foroplLcSystemPrompt.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "821eee536265cf4edc8b28e1cce2b068"
-    },
-    "option.foroplLcTimeout.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "1114c5343fe0759662e28b21433a04e0"
-    },
-    "option_explain.foroplLcApiKey.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcApiUrl.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcDomainWhitelist.txt": {
-        "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
-        "hash": ""
-    },
-    "option_explain.foroplLcEnabled.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcLogRetentionDays.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcMaxAccountAgeDays.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcMaxChars.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcMaxQueuedMessages.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcMaxTokens.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "option_explain.foroplLcModel.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcRequireLink.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcSystemPrompt.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.foroplLcTimeout.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_group.foroplLc.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "option_group_description.foroplLc.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": ""
-    },
-    "foropl_lc_verdict_edited_in_queue.txt": {
-        "global_cache": false,
-        "version_id": 1000270,
-        "version_string": "1.0.2",
-        "hash": ""
+        "hash": "5cd32713d8d7c4d685eee24bbaea5e4c"
     },
     "foropl_lc_edited_after_flag.txt": {
         "global_cache": false,
         "version_id": 1000370,
         "version_string": "1.0.3",
-        "hash": ""
+        "hash": "e086673b35b8179446782adf7bd8d750"
+    },
+    "foropl_lc_log.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "aaebd719e0f1f0a4b5f7658616b049e5"
+    },
+    "foropl_lc_queue_flood.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "a719597e32a783cda2eda037f4c9e103"
+    },
+    "foropl_lc_verdict_denied_flood.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "8f6dd4214a71624acac41626062e3ce0"
+    },
+    "foropl_lc_verdict_edited_in_queue.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "8f65fd435d10ff5ba95c3723334401b4"
+    },
+    "foropl_lc_verdict_error.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "85e5e1c7896c9593f96cd505e51bbf11"
+    },
+    "foropl_lc_verdict_ham.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "5ef13d87341252a6ef8cf0ac92f9e06c"
+    },
+    "foropl_lc_verdict_spam.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "e9dfd31cc505d51fc26975250750deab"
+    },
+    "option.foroplLcApiKey.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "5dea594659b2ac1c001955628e4eebf4"
+    },
+    "option.foroplLcApiUrl.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "eabd7d2a46428922f58b34f28654f7b3"
+    },
+    "option.foroplLcDomainWhitelist.txt": {
+        "global_cache": false,
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "9414d41ed79ea66185ed23120b110a6b"
+    },
+    "option.foroplLcEnabled.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "5a19dc0741bf66a05534b438fb754fd4"
+    },
+    "option.foroplLcLogRetentionDays.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "6c56d928b544771a5d7fa1975412b44d"
+    },
+    "option.foroplLcMaxAccountAgeDays.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "057482c8a1ac562c7e9e42f7fdb91028"
+    },
+    "option.foroplLcMaxChars.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "e8b60b0a837b79bfd7b9e62fea0dae6c"
+    },
+    "option.foroplLcMaxQueuedMessages.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "5894d3934729e4a1954ac748ee33e76e"
+    },
+    "option.foroplLcMaxTokens.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "c2c614b47f975909d8709aa002c906e0"
+    },
+    "option.foroplLcModel.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "e8deaee7691c961ae0a2584cd609dfc6"
+    },
+    "option.foroplLcRequireLink.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "1b0b7b5e78ec79abb1a49f792f6b6f27"
+    },
+    "option.foroplLcSystemPrompt.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "f9d9adcc1b3779146e7e4da6e8da4a44"
+    },
+    "option.foroplLcTimeout.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "ea50734f5b06924f3958de67e0f14fe8"
+    },
+    "option_explain.foroplLcApiKey.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "d95bc42c5d37edfb0fadd2b66ba2fa92"
+    },
+    "option_explain.foroplLcApiUrl.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "de1044802ff030e81a251636fdaebfb8"
+    },
+    "option_explain.foroplLcDomainWhitelist.txt": {
+        "global_cache": false,
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "fbb971e172a1d2856d409dffa8e3c09b"
+    },
+    "option_explain.foroplLcEnabled.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "debef095b381d478ed0aa826ebe08023"
+    },
+    "option_explain.foroplLcLogRetentionDays.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "161307570ed8c9fa1ceec4bd1204f3a9"
+    },
+    "option_explain.foroplLcMaxAccountAgeDays.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "c1405c109fa4142eee5a1d56b2efe0a0"
+    },
+    "option_explain.foroplLcMaxChars.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "6b642b112db9548139f6f72ad7e86c4e"
+    },
+    "option_explain.foroplLcMaxQueuedMessages.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "2952abf2698a4fb2b1accd419c08a304"
+    },
+    "option_explain.foroplLcMaxTokens.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "93a68d4f371124448b278abe79354f99"
+    },
+    "option_explain.foroplLcModel.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "95312a16aa185ddce9ae351d8821476a"
+    },
+    "option_explain.foroplLcRequireLink.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "ba233dd31af052b4a43b802362da59f6"
+    },
+    "option_explain.foroplLcSystemPrompt.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "05f5796d85fb6f8951ef05b6dd08dafc"
+    },
+    "option_explain.foroplLcTimeout.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "184b3ac4350526da1a89bc0cceb4cf4f"
+    },
+    "option_group.foroplLc.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "735d2437f8c0a81490f0cd787a2f6bce"
+    },
+    "option_group_description.foroplLc.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "29f7a6f4371ac1942900ce398db67938"
     }
 }

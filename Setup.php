@@ -41,9 +41,36 @@ class Setup extends AbstractSetup
 		});
 	}
 
+	public function installStep3()
+	{
+		$this->createReservationTable();
+	}
+
 	public function upgrade1000170Step1()
 	{
 		$this->installStep2();
+	}
+
+	public function upgrade1000570Step1()
+	{
+		$this->createReservationTable();
+	}
+
+	protected function createReservationTable(): void
+	{
+		$this->schemaManager()->createTable('xf_foropl_lc_reservation', function (Create $table)
+		{
+			$table->addColumn('reservation_id', 'int')->autoIncrement();
+			$table->addColumn('user_id', 'int');
+			$table->addColumn('reservation_key', 'varbinary', 64);
+			$table->addColumn('content_type', 'varbinary', 25)->setDefault('');
+			$table->addColumn('reserve_date', 'int')->setDefault(0);
+			$table->addColumn('expire_date', 'int')->setDefault(0);
+			$table->addPrimaryKey('reservation_id');
+			$table->addUniqueKey('reservation_key');
+			$table->addKey(['user_id', 'expire_date'], 'user_id_expire_date');
+			$table->addKey('expire_date');
+		});
 	}
 
 	public function uninstallStep1()
@@ -57,5 +84,10 @@ class Setup extends AbstractSetup
 		{
 			$table->dropColumns(['foropl_lc_first_post_date']);
 		});
+	}
+
+	public function uninstallStep3()
+	{
+		$this->schemaManager()->dropTable('xf_foropl_lc_reservation');
 	}
 }

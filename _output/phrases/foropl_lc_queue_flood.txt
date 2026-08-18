@@ -1,1 +1,1 @@
-User already has {count} messages pending moderation; further submissions are blocked
+User already has {count} messages pending moderation or being checked; further submissions are blocked

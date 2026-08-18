@@ -6,7 +6,7 @@
     "validation_class": "",
     "validation_method": "",
     "advanced": false,
-    "default_value": "5",
+    "default_value": "3",
     "relations": {
         "foroplLc": 60
     }

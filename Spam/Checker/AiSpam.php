@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace foroPL\LimpiaCucarachas\Spam\Checker;
 
 use foroPL\LimpiaCucarachas\Repository\Log as LogRepository;
+use foroPL\LimpiaCucarachas\Repository\Queue as QueueRepository;
 use GuzzleHttp\Exception\TransferException;
 use XF\Entity\User;
 use XF\Spam\Checker\AbstractProvider;
@@ -12,6 +13,8 @@ use XF\Spam\Checker\ContentCheckerInterface;
 
 class AiSpam extends AbstractProvider implements ContentCheckerInterface
 {
+	protected $requestDecisions = [];
+
 	protected function getType()
 	{
 		return 'LimpiaCucarachasAi';
@@ -19,13 +22,22 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 
 	public function check(User $user, $message, array $extraParams = [])
 	{
-		$contentType = $extraParams['content_type'] ?? '';
+		$message = (string) $message;
+		$contentType = (string) ($extraParams['content_type'] ?? '');
+		$options = $this->app()->options();
+		$checkKey = $this->getRequestCheckKey($contentType, $extraParams, $message);
+
+		if ($checkKey !== null && isset($this->requestDecisions[$checkKey]))
+		{
+			$this->logDecision($this->requestDecisions[$checkKey]);
+			return;
+		}
 
 		// The contact form has no approval queue: a 'moderated' decision
 		// silently discards the email, so the AI must never judge it.
 		if ($contentType === 'contact' || !$user->user_id)
 		{
-			$this->logDecision('allowed');
+			$this->rememberDecision($checkKey, 'allowed');
 			return;
 		}
 
@@ -35,22 +47,40 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		}
 		elseif (!$user->foroplLcIsWatched())
 		{
-			$this->logDecision('allowed');
+			$this->rememberDecision($checkKey, 'allowed');
 			return;
 		}
 
-		$queuedCount = $this->getModeratedContentCount($user);
-		if ($queuedCount >= $this->app()->options()->foroplLcMaxQueuedMessages)
+		if ($this->isQueueableContentType($contentType))
 		{
-			$this->logDecision('denied');
-			$this->logDetail('foropl_lc_queue_flood', ['count' => $queuedCount]);
-			$this->writeLog($user, $contentType, 'denied_flood', "$queuedCount messages already queued", $message);
-			return;
+			/** @var QueueRepository $queueRepo */
+			$queueRepo = $this->app()->repository(QueueRepository::class);
+			$reservation = $queueRepo->reserveQueueSlot(
+				$user,
+				$contentType,
+				(int) $options->foroplLcMaxQueuedMessages,
+				(int) ($extraParams['content_id'] ?? 0)
+			);
+
+			if (!$reservation['reserved'])
+			{
+				$pendingCount = $reservation['queued_count'] + $reservation['reserved_count'];
+				$this->rememberDecision($checkKey, 'denied');
+				$this->logDetail('foropl_lc_queue_flood', ['count' => $pendingCount]);
+				$this->writeLog(
+					$user,
+					$contentType,
+					'denied_flood',
+					"$pendingCount messages queued or being checked",
+					$message
+				);
+				return;
+			}
 		}
 
-		if ($this->app()->options()->foroplLcRequireLink && !$this->hasSuspiciousLink($message))
+		if ($options->foroplLcRequireLink && !$this->hasSuspiciousLink($message))
 		{
-			$this->logDecision('allowed');
+			$this->rememberDecision($checkKey, 'allowed');
 			return;
 		}
 
@@ -63,7 +93,7 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 
 			if ($verdict['spam'])
 			{
-				$this->logDecision('moderated');
+				$this->rememberDecision($checkKey, 'moderated');
 				$this->logDetail('foropl_lc_ai_detected_spam', [
 					'reason' => $verdict['reason'],
 					'flagged' => $this->getFlaggedExcerpt($message),
@@ -71,7 +101,7 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			}
 			else
 			{
-				$this->logDecision('allowed');
+				$this->rememberDecision($checkKey, 'allowed');
 			}
 
 			$this->logParam('foroplLcAi', $verdict);
@@ -81,7 +111,7 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		{
 			$responseMs = (int) round((microtime(true) - $startTime) * 1000);
 
-			$this->logDecision('moderated');
+			$this->rememberDecision($checkKey, 'moderated');
 			$this->logDetail('foropl_lc_ai_check_failed', [
 				'flagged' => $this->getFlaggedExcerpt($message),
 			]);
@@ -95,6 +125,37 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 
 	public function submitHam($contentType, $contentIds)
 	{
+	}
+
+	protected function getRequestCheckKey(string $contentType, array $extraParams, string $message): ?string
+	{
+		$contentId = (int) ($extraParams['content_id'] ?? 0);
+		if (!$contentId)
+		{
+			return null;
+		}
+
+		return $contentType . ':' . $contentId . ':' . sha1($message);
+	}
+
+	protected function rememberDecision(?string $checkKey, string $decision): void
+	{
+		if ($checkKey !== null)
+		{
+			$this->requestDecisions[$checkKey] = $decision;
+		}
+
+		$this->logDecision($decision);
+	}
+
+	protected function isQueueableContentType(string $contentType): bool
+	{
+		return in_array($contentType, [
+			'thread',
+			'post',
+			'profile_post',
+			'profile_post_comment',
+		], true);
 	}
 
 	protected function hasSuspiciousLink(string $message): bool
@@ -159,22 +220,6 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		}
 
 		return false;
-	}
-
-	protected function getModeratedContentCount(User $user): int
-	{
-		$db = $this->app()->db();
-
-		$posts = (int) $db->fetchOne(
-			"SELECT COUNT(*) FROM xf_post WHERE user_id = ? AND message_state = 'moderated'",
-			$user->user_id
-		);
-		$threads = (int) $db->fetchOne(
-			"SELECT COUNT(*) FROM xf_thread WHERE user_id = ? AND discussion_state = 'moderated'",
-			$user->user_id
-		);
-
-		return $posts + $threads;
 	}
 
 	protected function queryAi(User $user, string $message, array $extraParams): array

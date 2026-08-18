@@ -1,0 +1,18 @@
+{
+    "cron_class": "foroPL\\LimpiaCucarachas\\Cron\\CleanUp",
+    "cron_method": "cleanUpReservations",
+    "run_rules": {
+        "minutes": [
+            0,
+            30
+        ],
+        "hours": [
+            -1
+        ],
+        "day_type": "dom",
+        "dom": [
+            -1
+        ]
+    },
+    "active": true
+}
