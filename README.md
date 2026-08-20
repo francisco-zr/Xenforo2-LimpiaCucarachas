@@ -14,7 +14,7 @@ When a **recently registered account** posts a message **containing a link**, th
 
 ### Flood protection
 
-If a recent account already has several messages sitting in the moderation queue, further submissions are **blocked outright** — no AI call needed. A short-lived atomic reservation also covers simultaneous checks while the AI is responding, so parallel requests cannot all pass the same queue count.
+If a recent account already has several messages sitting in the moderation queue, further submissions are **blocked outright** — no AI call needed.
 
 ### Closes the message-count loophole — and catches dormant accounts
 

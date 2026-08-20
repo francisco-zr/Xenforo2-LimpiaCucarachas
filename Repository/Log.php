@@ -21,6 +21,10 @@ class Log extends Repository
 	{
 		try
 		{
+			$filterer = $this->app()->inputFilterer();
+			$reason = $filterer->filter((string) $reason, 'str');
+			$message = $filterer->filter((string) $message, 'str');
+
 			/** @var LogEntity $log */
 			$log = $this->em->create('foroPL\LimpiaCucarachas:Log');
 			$log->user_id = $user->user_id;

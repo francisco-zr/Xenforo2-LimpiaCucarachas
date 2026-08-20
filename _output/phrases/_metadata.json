@@ -11,12 +11,6 @@
         "version_string": "1.0.0 Alpha",
         "hash": "ad71bb77da8abbd0b6eaeefec2a9a3a3"
     },
-    "cron_entry.foroplLcResCleanUp.txt": {
-        "global_cache": false,
-        "version_id": 1000470,
-        "version_string": "1.0.4",
-        "hash": "fb8782599d43f717a6c7f9398c32607d"
-    },
     "foropl_lc_ai_check_failed.txt": {
         "global_cache": false,
         "version_id": 1000010,

@@ -55,23 +55,17 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		{
 			/** @var QueueRepository $queueRepo */
 			$queueRepo = $this->app()->repository(QueueRepository::class);
-			$reservation = $queueRepo->reserveQueueSlot(
-				$user,
-				$contentType,
-				(int) $options->foroplLcMaxQueuedMessages,
-				(int) ($extraParams['content_id'] ?? 0)
-			);
+			$queuedCount = $queueRepo->getModeratedContentCount((int) $user->user_id);
 
-			if (!$reservation['reserved'])
+			if ($queuedCount >= max(1, (int) $options->foroplLcMaxQueuedMessages))
 			{
-				$pendingCount = $reservation['queued_count'] + $reservation['reserved_count'];
 				$this->rememberDecision($checkKey, 'denied');
-				$this->logDetail('foropl_lc_queue_flood', ['count' => $pendingCount]);
+				$this->logDetail('foropl_lc_queue_flood', ['count' => $queuedCount]);
 				$this->writeLog(
 					$user,
 					$contentType,
 					'denied_flood',
-					"$pendingCount messages queued or being checked",
+					"$queuedCount messages queued or being checked",
 					$message
 				);
 				return;
@@ -160,28 +154,137 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 
 	protected function hasSuspiciousLink(string $message): bool
 	{
-		if (!preg_match_all('#(?:https?://|www\.)[^\s\[\]<>"\'\)]+#i', $message, $matches))
-		{
-			return false;
-		}
-
+		$message = $this->normalizeHomoglyphs($message);
 		$whitelist = $this->getWhitelistedDomains();
 
-		foreach ($matches[0] AS $url)
+		if (preg_match_all('#(?:https?://|www\.)[^\s\[\]<>"\'\)]+#i', $message, $matches))
 		{
-			if (stripos($url, 'http') !== 0)
+			foreach ($matches[0] AS $url)
 			{
-				$url = 'http://' . $url;
+				if ($this->isSuspiciousUrl($url, $whitelist))
+				{
+					return true;
+				}
 			}
+		}
 
-			$host = parse_url($url, PHP_URL_HOST);
-			if (!$host || !$this->isWhitelistedHost(strtolower($host), $whitelist))
+		// The [URL] BB code is the editor's insert-link button and a common
+		// obfuscation vector: the tag itself can carry a link (attribute) or
+		// the link can be hidden inside the tag body with homoglyph characters.
+		// Treat any [URL] tag that does not point to a whitelisted host as
+		// suspicious, whether or not it carries a detectable link.
+		if (preg_match_all('#\[URL(?:="([^"]*)"|=\'([^\']*)\'|)\](.*?)\[/URL\]#is', $message, $matches, PREG_SET_ORDER))
+		{
+			foreach ($matches AS $match)
 			{
-				return true;
+				$attribute = trim($match[1] ?? '');
+				if ($attribute === '')
+				{
+					$attribute = trim($match[2] ?? '');
+				}
+				$body = $match[3] ?? '';
+
+				if ($attribute !== '')
+				{
+					if (!$this->isWhitelistedUrl($attribute, $whitelist))
+					{
+						return true;
+					}
+				}
+				elseif (preg_match('#(?:https?://|www\.)[^\s\[\]<>"\'\)]+#i', $body, $urlMatch))
+				{
+					if ($this->isSuspiciousUrl($urlMatch[0], $whitelist))
+					{
+						return true;
+					}
+				}
+				else
+				{
+					return true;
+				}
 			}
 		}
 
 		return false;
+	}
+
+	protected function isWhitelistedUrl(string $url, array $whitelist): bool
+	{
+		if (preg_match('#^(?:https?://|www\.)#i', $url))
+		{
+			return !$this->isSuspiciousUrl($url, $whitelist);
+		}
+
+		// A bare host or path without a scheme is not an external link.
+		return true;
+	}
+
+	protected function isSuspiciousUrl(string $url, array $whitelist): bool
+	{
+		if (stripos($url, 'http') !== 0)
+		{
+			$url = 'http://' . $url;
+		}
+
+		$host = parse_url($url, PHP_URL_HOST);
+		return !$host || !$this->isWhitelistedHost(strtolower($host), $whitelist);
+	}
+
+	/**
+	 * Replaces Unicode lookalike (homoglyph) characters with their ASCII
+	 * equivalents so obfuscated URLs such as "httрs://" (Cyrillic р) or
+	 * fullwidth "ｈｔｔｐｓ" are detected like their plain ASCII forms.
+	 */
+	protected function normalizeHomoglyphs(string $message): string
+	{
+		static $map = null;
+
+		if ($map === null)
+		{
+			$map = [
+				// Cyrillic
+				"\u{0430}" => 'a', "\u{0432}" => 'b', "\u{0435}" => 'e',
+				"\u{043E}" => 'o', "\u{0440}" => 'p', "\u{0441}" => 'c',
+				"\u{0443}" => 'y', "\u{0445}" => 'x', "\u{0456}" => 'i',
+				"\u{0458}" => 'j', "\u{0455}" => 's', "\u{0461}" => 'w',
+				"\u{04BB}" => 'h', "\u{049B}" => 'k', "\u{043F}" => 'n',
+				"\u{0442}" => 'm',
+				// Greek
+				"\u{03B1}" => 'a', "\u{03B2}" => 'b', "\u{03B5}" => 'e',
+				"\u{03BF}" => 'o', "\u{03C1}" => 'p', "\u{03C3}" => 's',
+				"\u{03C4}" => 't', "\u{03C5}" => 'y', "\u{03C6}" => 'f',
+				"\u{03C7}" => 'x', "\u{03B9}" => 'i', "\u{03BD}" => 'v',
+				"\u{03BA}" => 'k', "\u{03BC}" => 'm',
+				// Fullwidth ASCII
+				"\u{FF10}" => '0', "\u{FF11}" => '1', "\u{FF12}" => '2',
+				"\u{FF13}" => '3', "\u{FF14}" => '4', "\u{FF15}" => '5',
+				"\u{FF16}" => '6', "\u{FF17}" => '7', "\u{FF18}" => '8',
+				"\u{FF19}" => '9',
+				"\u{FF21}" => 'A', "\u{FF22}" => 'B', "\u{FF23}" => 'C',
+				"\u{FF24}" => 'D', "\u{FF25}" => 'E', "\u{FF26}" => 'F',
+				"\u{FF27}" => 'G', "\u{FF28}" => 'H', "\u{FF29}" => 'I',
+				"\u{FF2A}" => 'J', "\u{FF2B}" => 'K', "\u{FF2C}" => 'L',
+				"\u{FF2D}" => 'M', "\u{FF2E}" => 'N', "\u{FF2F}" => 'O',
+				"\u{FF30}" => 'P', "\u{FF31}" => 'Q', "\u{FF32}" => 'R',
+				"\u{FF33}" => 'S', "\u{FF34}" => 'T', "\u{FF35}" => 'U',
+				"\u{FF36}" => 'V', "\u{FF37}" => 'W', "\u{FF38}" => 'X',
+				"\u{FF39}" => 'Y', "\u{FF3A}" => 'Z',
+				"\u{FF41}" => 'a', "\u{FF42}" => 'b', "\u{FF43}" => 'c',
+				"\u{FF44}" => 'd', "\u{FF45}" => 'e', "\u{FF46}" => 'f',
+				"\u{FF47}" => 'g', "\u{FF48}" => 'h', "\u{FF49}" => 'i',
+				"\u{FF4A}" => 'j', "\u{FF4B}" => 'k', "\u{FF4C}" => 'l',
+				"\u{FF4D}" => 'm', "\u{FF4E}" => 'n', "\u{FF4F}" => 'o',
+				"\u{FF50}" => 'p', "\u{FF51}" => 'q', "\u{FF52}" => 'r',
+				"\u{FF53}" => 's', "\u{FF54}" => 't', "\u{FF55}" => 'u',
+				"\u{FF56}" => 'v', "\u{FF57}" => 'w', "\u{FF58}" => 'x',
+				"\u{FF59}" => 'y', "\u{FF5A}" => 'z',
+				"\u{FF0E}" => '.', "\u{FF0F}" => '/', "\u{FF1A}" => ':',
+				// Misc lookalikes
+				"\u{0131}" => 'i', "\u{2170}" => 'i', "\u{217C}" => 'l',
+			];
+		}
+
+		return strtr($message, $map);
 	}
 
 	protected function getWhitelistedDomains(): array
