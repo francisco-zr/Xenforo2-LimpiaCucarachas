@@ -215,8 +215,38 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			return !$this->isSuspiciousUrl($url, $whitelist);
 		}
 
-		// A bare host or path without a scheme is not an external link.
-		return true;
+		$first = $url[0];
+		if ($first === '?' || $first === '#' || $first === '/' || $first === ':')
+		{
+			// A query, fragment, protocol-relative or colon-led reference is
+			// not an external link, matching how XF's getValidUrl() rejects them.
+			return true;
+		}
+
+		// A scheme-less attribute such as [URL=somedomain.net/somepath] is still
+		// rendered as an external link: XF's getValidUrl() prepends http://.
+		// Only treat it as internal when it cannot have an external host.
+		return !$this->isExternalHostPath($url, $whitelist);
+	}
+
+	protected function isExternalHostPath(string $url, array $whitelist): bool
+	{
+		$host = parse_url('http://' . $url, PHP_URL_HOST);
+		if (!$host)
+		{
+			return false;
+		}
+
+		$host = strtolower($host);
+
+		if (strpos($host, '.') === false || $host === 'index.php')
+		{
+			// Relative paths like "threads/title.123/" have no host; XF also
+			// rewrites bare "index.php?..." links to the board's own URL.
+			return false;
+		}
+
+		return !$this->isWhitelistedHost($host, $whitelist);
 	}
 
 	protected function isSuspiciousUrl(string $url, array $whitelist): bool
