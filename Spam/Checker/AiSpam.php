@@ -41,6 +41,14 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			return;
 		}
 
+		// Exempt groups are skipped unconditionally, including a first post
+		// that would otherwise be checked before the watch window applies.
+		if ($user->foroplLcIsBypassed())
+		{
+			$this->rememberDecision($checkKey, 'allowed');
+			return;
+		}
+
 		if (!$user->foropl_lc_first_post_date)
 		{
 			$user->fastUpdate('foropl_lc_first_post_date', \XF::$time);
@@ -364,6 +372,8 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			'connect_timeout' => 5,
 			'headers' => [
 				'Authorization' => 'Bearer ' . trim($options->foroplLcApiKey),
+				'User-Agent' => $this->getUserAgent(),
+				'x-opencode-session' => $this->getSessionId($user),
 			],
 			'json' => [
 				'model' => trim($options->foroplLcModel),
@@ -375,6 +385,30 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		]);
 
 		return $this->parseVerdict($response->getBody()->getContents());
+	}
+
+	/**
+	 * Identifies the add-on as its own client instead of a generic HTTP
+	 * library, as required by providers such as OpenCode Go.
+	 */
+	protected function getUserAgent(): string
+	{
+		$addOn = $this->app()->addOnManager()->getById('foroPL/LimpiaCucarachas');
+		$version = $addOn && $addOn->version_string ? $addOn->version_string : '1.0';
+
+		return 'ForoPL-LimpiaCucarachas/' . $version . ' (+' . $this->app()->options()->boardUrl . ')';
+	}
+
+	/**
+	 * A stable session ID per watched user, so providers such as OpenCode Go
+	 * can optimize routing and prompt caching. Derived deterministically from
+	 * the board URL and user ID, and hashed so the raw ID is not exposed.
+	 */
+	protected function getSessionId(User $user): string
+	{
+		$seed = $this->app()->options()->boardUrl . '|' . $user->user_id;
+
+		return 'foropl-lc-' . substr(hash('sha256', $seed), 0, 32);
 	}
 
 	protected function buildPrompt(User $user, string $message, array $extraParams): array

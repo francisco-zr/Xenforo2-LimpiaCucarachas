@@ -1,0 +1,1 @@
+Members of these user groups are never checked by Limpia Cucarachas: no link analysis, no AI call and no flood protection. All other spam checks (spam phrases, Akismet, and so on) still apply. Useful for advertiser or premium groups that post links on purpose.

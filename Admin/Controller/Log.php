@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace foroPL\LimpiaCucarachas\Admin\Controller;
 
-use foroPL\LimpiaCucarachas\Entity\Log as LogEntity;
 use XF\Admin\Controller\AbstractController;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;

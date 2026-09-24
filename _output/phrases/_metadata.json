@@ -83,6 +83,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "eabd7d2a46428922f58b34f28654f7b3"
     },
+    "option.foroplLcBypassUserGroups.txt": {
+        "global_cache": false,
+        "version_id": 1000770,
+        "version_string": "1.0.7",
+        "hash": "ff993899e2235de27917e81bb27ffef9"
+    },
     "option.foroplLcDomainWhitelist.txt": {
         "global_cache": false,
         "version_id": 1000070,
@@ -160,6 +166,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "de1044802ff030e81a251636fdaebfb8"
+    },
+    "option_explain.foroplLcBypassUserGroups.txt": {
+        "global_cache": false,
+        "version_id": 1000770,
+        "version_string": "1.0.7",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
     "option_explain.foroplLcDomainWhitelist.txt": {
         "global_cache": false,

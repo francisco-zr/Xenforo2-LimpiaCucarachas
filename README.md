@@ -26,7 +26,7 @@ Counting from the first message — not from registration — means sleeper acco
 
 Works with **any OpenAI-compatible chat completions API**. Just set the endpoint URL, API key and model name in the options:
 
-- **[OpenCode Zen](https://opencode.ai/)** — default configuration. The `big-pickle` test model is **free**, so you can try the add-on without spending anything.
+- **[OpenCode Zen](https://opencode.ai/)** — default configuration. The `big-pickle` test model is **free**, so you can try the add-on without spending anything. Requests identify the add-on with its own user agent and send the `x-opencode-session` header (a stable ID per watched user) as required by OpenCode Go.
 - **DeepSeek** (`https://api.deepseek.com/chat/completions`, model `deepseek-chat`) — extremely cheap per-call pricing.
 - OpenRouter, OpenAI, or any other compatible endpoint.
 
@@ -47,6 +47,7 @@ All thresholds are configurable under **Admin CP → Options → [ForoPL] Limpia
 - Days to watch after a user's first message
 - Queued messages before blocking
 - Only check messages containing links (on/off)
+- User groups exempt from the AI check
 - API endpoint URL, key and model
 - Request timeout, response token budget, message truncation
 - Log retention (days)

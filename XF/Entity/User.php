@@ -46,6 +46,11 @@ class User extends XFCP_User
 			return false;
 		}
 
+		if ($this->foroplLcIsBypassed())
+		{
+			return false;
+		}
+
 		$window = (int) $this->app()->options()->foroplLcMaxAccountAgeDays * 86400;
 
 		$firstPostDate = $this->foropl_lc_first_post_date;
@@ -60,6 +65,18 @@ class User extends XFCP_User
 		}
 
 		return $this->register_date >= (\XF::$time - $window);
+	}
+
+	/**
+	 * Whether this user is exempt from the add-on's checks. Premium or
+	 * advertiser groups post links on purpose and usually stay below the
+	 * message threshold, so they should never reach the AI.
+	 */
+	public function foroplLcIsBypassed()
+	{
+		$userGroups = (array) $this->app()->options()->foroplLcBypassUserGroups;
+
+		return $userGroups && $this->isMemberOf($userGroups);
 	}
 
 	public static function getStructure(Structure $structure)

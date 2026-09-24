@@ -41,7 +41,6 @@ class Log extends Entity
 			'response_ms' => ['type' => self::UINT, 'default' => 0],
 			'snippet' => ['type' => self::STR, 'maxLength' => 500, 'default' => ''],
 		];
-		$structure->getters = [];
 		$structure->relations = [
 			'User' => [
 				'entity' => 'XF:User',

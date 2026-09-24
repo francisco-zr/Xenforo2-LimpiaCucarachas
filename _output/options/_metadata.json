@@ -5,6 +5,9 @@
     "foroplLcApiUrl.json": {
         "hash": "5df9a3848f234f109fcf0db6ec2dcc5b"
     },
+    "foroplLcBypassUserGroups.json": {
+        "hash": "5f7541904ed1fd53ac572171228c745f"
+    },
     "foroplLcDomainWhitelist.json": {
         "hash": "d2d96c38bef850c134180c15dc62269b"
     },
