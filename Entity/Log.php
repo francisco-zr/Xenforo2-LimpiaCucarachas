@@ -59,7 +59,7 @@ class Log extends Entity
 			'Moderator' => [
 				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
-				'conditions' => 'moderator_user_id',
+				'conditions' => [['user_id', '=', '$moderator_user_id']],
 				'primary' => true,
 			],
 		];
