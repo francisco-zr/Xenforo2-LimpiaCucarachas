@@ -23,13 +23,16 @@ class Setup extends AbstractSetup
 			$table->addColumn('log_date', 'int')->setDefault(0);
 			$table->addColumn('user_id', 'int')->setDefault(0);
 			$table->addColumn('content_type', 'varbinary', 25)->setDefault('');
+			$table->addColumn('content_id', 'int')->setDefault(0);
 			$table->addColumn('verdict', 'varbinary', 25)->setDefault('');
 			$table->addColumn('reason', 'varchar', 255)->setDefault('');
 			$table->addColumn('response_ms', 'int')->setDefault(0);
 			$table->addColumn('snippet', 'varchar', 500)->setDefault('');
+			$table->addColumn('moderator_user_id', 'int')->setDefault(0);
 			$table->addPrimaryKey('log_id');
 			$table->addKey('log_date');
 			$table->addKey('user_id');
+			$table->addKey(['content_type', 'content_id']);
 		});
 	}
 
@@ -59,6 +62,20 @@ class Setup extends AbstractSetup
 		}
 
 		\XF::db()->delete('xf_cron_entry', 'entry_id = ?', 'foroplLcResCleanUp');
+	}
+
+	/**
+	 * 1.0.9 records moderator feedback on AI verdicts, which needs to link a
+	 * log row to a piece of content and to the moderator who acted on it.
+	 */
+	public function upgrade1000970Step1()
+	{
+		$this->schemaManager()->alterTable('xf_foropl_lc_log', function (Alter $table)
+		{
+			$table->addColumn('content_id', 'int')->setDefault(0);
+			$table->addColumn('moderator_user_id', 'int')->setDefault(0);
+			$table->addKey(['content_type', 'content_id']);
+		});
 	}
 
 	public function uninstallStep1()

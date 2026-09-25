@@ -13,13 +13,16 @@ use XF\Mvc\Entity\Structure;
  * @property int $log_date
  * @property int $user_id
  * @property string $content_type
+ * @property int $content_id
  * @property string $verdict
  * @property string $reason
  * @property int $response_ms
  * @property string $snippet
+ * @property int $moderator_user_id
  *
  * RELATIONS
  * @property-read \XF\Entity\User|null $User
+ * @property-read \XF\Entity\User|null $Moderator
  */
 class Log extends Entity
 {
@@ -33,19 +36,30 @@ class Log extends Entity
 			'log_date' => ['type' => self::UINT, 'default' => \XF::$time],
 			'user_id' => ['type' => self::UINT, 'default' => 0],
 			'content_type' => ['type' => self::BINARY, 'maxLength' => 25, 'default' => ''],
+			'content_id' => ['type' => self::UINT, 'default' => 0],
 			'verdict' => ['type' => self::BINARY, 'maxLength' => 25,
-				'allowedValues' => ['spam', 'ham', 'denied_flood', 'error', 'edited_in_queue'],
+				'allowedValues' => [
+					'spam', 'ham', 'denied_flood', 'error', 'edited_in_queue',
+					'approved', 'confirmed_spam',
+				],
 				'default' => 'error',
 			],
 			'reason' => ['type' => self::STR, 'maxLength' => 255, 'default' => ''],
 			'response_ms' => ['type' => self::UINT, 'default' => 0],
 			'snippet' => ['type' => self::STR, 'maxLength' => 500, 'default' => ''],
+			'moderator_user_id' => ['type' => self::UINT, 'default' => 0],
 		];
 		$structure->relations = [
 			'User' => [
 				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
+				'primary' => true,
+			],
+			'Moderator' => [
+				'entity' => 'XF:User',
+				'type' => self::TO_ONE,
+				'conditions' => 'moderator_user_id',
 				'primary' => true,
 			],
 		];

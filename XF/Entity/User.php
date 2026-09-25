@@ -6,6 +6,9 @@ namespace foroPL\LimpiaCucarachas\XF\Entity;
 
 use XF\Mvc\Entity\Structure;
 
+/**
+ * @property int $foropl_lc_first_post_date
+ */
 class User extends XFCP_User
 {
 	public function isSpamCheckRequired()

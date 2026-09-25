@@ -38,7 +38,9 @@ The text that triggered the flag is stored with the spam log entry, so it stays 
 
 ## Verdict log
 
-Every AI decision (spam, clean, flood-block or API error) is recorded with its reason, response time and a snippet of the message, browsable under **Admin CP → Logs → Spam → Limpia Cucarachas**. Entries are cleaned up automatically after a configurable number of days.
+Every AI decision (spam, clean, flood-block or API error) is recorded with its reason, response time and a snippet of the message, browsable under **Admin CP → Logs → Spam → Limpia Cucarachas**.
+
+Moderator decisions are recorded too: when content the AI flagged as spam is approved, or content is confirmed as spam (for example via the spam cleaner), the log shows whether the AI was right and **which moderator** reviewed it. Entries are cleaned up automatically after a configurable number of days.
 
 ## Options
 

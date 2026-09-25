@@ -26,7 +26,7 @@ class Log extends AbstractController
 		$perPage = 50;
 
 		$logFinder = $this->finder('foroPL\LimpiaCucarachas:Log')
-			->with('User')
+			->with(['User', 'Moderator'])
 			->setDefaultOrder('log_date', 'DESC')
 			->limitByPage($page, $perPage);
 
@@ -50,7 +50,7 @@ class Log extends AbstractController
 		$entry = $this->assertRecordExists(
 			'foroPL\LimpiaCucarachas:Log',
 			$params->log_id,
-			'User',
+			['User', 'Moderator'],
 			'requested_log_entry_not_found'
 		);
 

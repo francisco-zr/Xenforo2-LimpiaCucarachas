@@ -15,6 +15,9 @@
 									<li>{{ phrase_dynamic('foropl_lc_verdict_' . $entry.verdict) }}</li>
 									<li><xf:date time="$entry.log_date" /></li>
 									<li>{{ $xf.app.getContentTypePhrase($entry.content_type) ?: $entry.content_type }}</li>
+									<xf:if is="$entry.Moderator">
+										<li>{{ phrase('foropl_lc_moderated_by') }} {{ $entry.Moderator.username }}</li>
+									</xf:if>
 									<xf:if is="$entry.response_ms">
 										<li>{$entry.response_ms}ms</li>
 									</xf:if>

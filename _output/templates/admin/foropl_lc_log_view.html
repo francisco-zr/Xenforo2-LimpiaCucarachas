@@ -11,6 +11,9 @@
 			</ul>
 			<ul class="listInline listInline--bullet u-muted">
 				<li class="u-muted">{{ phrase('generated_by:') }} {{ $entry.User ? '<a href="' . link('users/edit', $entry.User) . '">' . $entry.User.username . '</a>' : phrase('unknown_account') }}</li>
+				<xf:if is="$entry.Moderator">
+					<li class="u-muted">{{ phrase('foropl_lc_moderated_by') }} <a href="{{ link('users/edit', $entry.Moderator) }}">{$entry.Moderator.username}</a></li>
+				</xf:if>
 				<li><xf:date time="$entry.log_date" /></li>
 				<li>{{ $xf.app.getContentTypePhrase($entry.content_type) ?: $entry.content_type }}</li>
 				<xf:if is="$entry.response_ms">

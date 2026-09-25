@@ -22,8 +22,10 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 
 	public function check(User $user, $message, array $extraParams = [])
 	{
+		/** @var \foroPL\LimpiaCucarachas\XF\Entity\User $user */
 		$message = (string) $message;
 		$contentType = (string) ($extraParams['content_type'] ?? '');
+		$contentId = (int) ($extraParams['content_id'] ?? 0);
 		$options = $this->app()->options();
 		$checkKey = $this->getRequestCheckKey($contentType, $extraParams, $message);
 
@@ -107,7 +109,7 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			}
 
 			$this->logParam('foroplLcAi', $verdict);
-			$this->writeLog($user, $contentType, $verdict['spam'] ? 'spam' : 'ham', $verdict['reason'], $message, $responseMs);
+			$this->writeLog($user, $contentType, $verdict['spam'] ? 'spam' : 'ham', $verdict['reason'], $message, $responseMs, $contentId);
 		}
 		catch (TransferException | \RuntimeException | \InvalidArgumentException $e)
 		{
@@ -117,16 +119,88 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			$this->logDetail('foropl_lc_ai_check_failed', [
 				'flagged' => $this->getFlaggedExcerpt($message),
 			]);
-			$this->writeLog($user, $contentType, 'error', $e->getMessage(), $message, $responseMs);
+			$this->writeLog($user, $contentType, 'error', $e->getMessage(), $message, $responseMs, $contentId);
 		}
 	}
 
+	/**
+	 * A moderator is confirming content as spam (usually via the spam
+	 * cleaner). If the AI had already judged that content, record whether the
+	 * human agreed with it or caught a miss.
+	 */
 	public function submitSpam($contentType, $contentIds)
 	{
+		$this->logModeratorFeedback((string) $contentType, $contentIds, 'confirmed_spam');
 	}
 
+	/**
+	 * Content the AI flagged as spam has been approved. Only approvals that
+	 * overturn an AI spam flag are recorded, so the log shows false positives
+	 * rather than every routine moderation approval.
+	 */
 	public function submitHam($contentType, $contentIds)
 	{
+		$this->logModeratorFeedback((string) $contentType, $contentIds, 'approved');
+	}
+
+	protected function logModeratorFeedback(string $contentType, $contentIds, string $verdict): void
+	{
+		if ($contentIds instanceof \Traversable)
+		{
+			$contentIds = iterator_to_array($contentIds);
+		}
+		else if (!is_array($contentIds))
+		{
+			$contentIds = [$contentIds];
+		}
+
+		$moderator = \XF::visitor();
+		/** @var \foroPL\LimpiaCucarachas\Repository\Log $logRepo */
+		$logRepo = $this->app()->repository('foroPL\LimpiaCucarachas:Log');
+
+		foreach ($contentIds AS $contentId)
+		{
+			$contentId = (int) $contentId;
+			if ($contentId <= 0)
+			{
+				continue;
+			}
+
+			$aiLog = $logRepo->getLatestAiVerdict($contentType, $contentId);
+			if (!$aiLog)
+			{
+				// The AI never judged this content, so there is no verdict for
+				// a moderator to confirm or reject.
+				continue;
+			}
+
+			if ($verdict === 'confirmed_spam')
+			{
+				$reason = $aiLog->verdict === 'spam'
+					? 'Moderator confirmed spam (AI had flagged it)'
+					: 'Moderator confirmed spam (AI had not flagged it)';
+			}
+			else
+			{
+				if ($aiLog->verdict !== 'spam')
+				{
+					// The AI had not flagged this as spam, so approving it is
+					// not a reaction to the AI's verdict.
+					continue;
+				}
+
+				$reason = 'Moderator approved content over the AI spam flag';
+			}
+
+			$logRepo->logModeratorFeedback(
+				(int) $aiLog->user_id,
+				$contentType,
+				$contentId,
+				$verdict,
+				$reason,
+				(int) $moderator->user_id
+			);
+		}
 	}
 
 	protected function getRequestCheckKey(string $contentType, array $extraParams, string $message): ?string
@@ -487,10 +561,10 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		return $excerpt === $message ? $excerpt : $excerpt . '…';
 	}
 
-	protected function writeLog(User $user, string $contentType, string $verdict, string $reason, string $message, int $responseMs = 0): void
+	protected function writeLog(User $user, string $contentType, string $verdict, string $reason, string $message, int $responseMs = 0, int $contentId = 0): void
 	{
 		/** @var LogRepository $logRepo */
 		$logRepo = $this->app()->repository('foroPL\LimpiaCucarachas:Log');
-		$logRepo->logVerdict($user, $contentType, $verdict, $reason, $message, $responseMs);
+		$logRepo->logVerdict($user, $contentType, $verdict, $reason, $message, $responseMs, $contentId);
 	}
 }

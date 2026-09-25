@@ -1,13 +1,13 @@
 {
     "admin/foropl_lc_log_list.html": {
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "84a95cc51c042c99268c59a5cc27b03c"
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "446ecf54f6dc5e8ea6594fd49273ec7d"
     },
     "admin/foropl_lc_log_view.html": {
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "ca7ef1dc1bc531f5b9fd2ecd397e1d4a"
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "ac9eb3ef007507cc7af0b0a935530410"
     },
     "admin/option_template_foroplLcDomainWhitelist.html": {
         "version_id": 1000070,
