@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace foroPL\LimpiaCucarachas\XF\Service\Post;
 
-use foroPL\LimpiaCucarachas\Repository\Log as LogRepository;
 use XF\Entity\Post;
 use XF\Finder\SpamTriggerLogFinder;
 
@@ -12,9 +11,10 @@ class EditorService extends XFCP_EditorService
 {
 	/**
 	 * Core only spam-checks edits to visible posts, so a message sitting in the
-	 * approval queue can be rewritten without leaving any trace. Record those
-	 * edits: the moderator still sees the originally flagged text in the spam
-	 * log, and the rewrite itself is evidence of bad faith.
+	 * approval queue can be rewritten without leaving any trace. Note those
+	 * edits in the spam trigger log: the moderator still sees the originally
+	 * flagged text next to the warning, and the rewrite itself is evidence of
+	 * bad faith.
 	 */
 	public function checkForSpam()
 	{
@@ -26,16 +26,6 @@ class EditorService extends XFCP_EditorService
 			&& $visitor->isSpamCheckRequired()
 		)
 		{
-			/** @var LogRepository $logRepo */
-			$logRepo = $this->repository('foroPL\LimpiaCucarachas:Log');
-			$logRepo->logVerdict(
-				$visitor,
-				'post',
-				'edited_in_queue',
-				'Message edited while pending moderation',
-				$post->message
-			);
-
 			$this->noteEditInSpamLog($post);
 		}
 

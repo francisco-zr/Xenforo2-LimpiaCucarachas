@@ -1,1 +1,1 @@
-Runs an AI check on messages posted by recently registered accounts. Messages the AI flags as spam are sent to the approval queue; the verdict and reason are logged under Logs > Limpia Cucarachas and in the spam trigger log. Requires an API key.
+Runs an AI check on messages posted by recently registered accounts. Messages the AI flags as spam are sent to the approval queue, with the verdict and reason visible in the spam trigger log. Requires an API key.

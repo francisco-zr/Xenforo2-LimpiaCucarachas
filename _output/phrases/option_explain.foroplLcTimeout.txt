@@ -1,1 +1,1 @@
-Seconds to wait for the AI response. If the request fails or times out, the message is held for moderator approval anyway (fail-closed) and the failure is recorded in the Limpia Cucarachas log.
+Seconds to wait for the AI response. If the request fails or times out, the message is held for moderator approval anyway (fail-closed) and the failure is visible in the spam trigger log.

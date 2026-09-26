@@ -1,1 +1,0 @@
-AI verdict log entries older than this many days are deleted by a daily clean-up task.

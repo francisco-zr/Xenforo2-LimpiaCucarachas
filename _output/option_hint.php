@@ -16,7 +16,6 @@ namespace XF;
  * @property array|null $foroplLcBypassUserGroups User groups exempt from the AI check
  * @property string|null $foroplLcDomainWhitelist Whitelisted link domains
  * @property bool|null $foroplLcEnabled Limpia Cucarachas: enable AI spam check
- * @property positive-int|null $foroplLcLogRetentionDays Verdict log retention
  * @property positive-int|null $foroplLcMaxAccountAgeDays Days to watch after first message
  * @property positive-int|null $foroplLcMaxChars Maximum message length sent to AI
  * @property positive-int|null $foroplLcMaxQueuedMessages Maximum queued messages before blocking

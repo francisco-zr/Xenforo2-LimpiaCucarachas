@@ -1,16 +1,4 @@
 {
-    "admin_navigation.foroplLcLog.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "aaebd719e0f1f0a4b5f7658616b049e5"
-    },
-    "cron_entry.foroplLcCleanUp.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "ad71bb77da8abbd0b6eaeefec2a9a3a3"
-    },
     "foropl_lc_ai_check_failed.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -29,65 +17,11 @@
         "version_string": "1.0.3",
         "hash": "e086673b35b8179446782adf7bd8d750"
     },
-    "foropl_lc_log.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "aaebd719e0f1f0a4b5f7658616b049e5"
-    },
-    "foropl_lc_moderated_by.txt": {
-        "global_cache": false,
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "9613dbbd5523ede6513024450e2b814d"
-    },
     "foropl_lc_queue_flood.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "a719597e32a783cda2eda037f4c9e103"
-    },
-    "foropl_lc_verdict_approved.txt": {
-        "global_cache": false,
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "81eee3592189c79b20142addb6911c5b"
-    },
-    "foropl_lc_verdict_confirmed_spam.txt": {
-        "global_cache": false,
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "76561d48b9b9042586713d3961d6858d"
-    },
-    "foropl_lc_verdict_denied_flood.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "8f6dd4214a71624acac41626062e3ce0"
-    },
-    "foropl_lc_verdict_edited_in_queue.txt": {
-        "global_cache": false,
-        "version_id": 1000270,
-        "version_string": "1.0.2",
-        "hash": "8f65fd435d10ff5ba95c3723334401b4"
-    },
-    "foropl_lc_verdict_error.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "85e5e1c7896c9593f96cd505e51bbf11"
-    },
-    "foropl_lc_verdict_ham.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "5ef13d87341252a6ef8cf0ac92f9e06c"
-    },
-    "foropl_lc_verdict_spam.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "e9dfd31cc505d51fc26975250750deab"
     },
     "option.foroplLcApiKey.txt": {
         "global_cache": false,
@@ -118,12 +52,6 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "5a19dc0741bf66a05534b438fb754fd4"
-    },
-    "option.foroplLcLogRetentionDays.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "6c56d928b544771a5d7fa1975412b44d"
     },
     "option.foroplLcMaxAccountAgeDays.txt": {
         "global_cache": false,
@@ -202,12 +130,6 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "debef095b381d478ed0aa826ebe08023"
-    },
-    "option_explain.foroplLcLogRetentionDays.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "161307570ed8c9fa1ceec4bd1204f3a9"
     },
     "option_explain.foroplLcMaxAccountAgeDays.txt": {
         "global_cache": false,
