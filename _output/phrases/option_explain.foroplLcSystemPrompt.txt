@@ -1,1 +1,1 @@
-Leave empty to use the built-in prompt. A custom prompt must instruct the model to respond with only a JSON object: {"spam": true or false, "reason": "..."}.
+Leave empty to use the built-in prompt, which covers suspicious links and posting bursts. A custom prompt must instruct the model to respond with only a JSON object: {"spam": true or false, "reason": "..."}. If you customise it, also tell the model how to treat the posting-rate line the add-on adds during bursts (for example: Posting rate: 12 messages in the last 15 minutes).

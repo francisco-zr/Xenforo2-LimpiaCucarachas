@@ -205,9 +205,9 @@
     },
     "option_explain.foroplLcSystemPrompt.txt": {
         "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "05f5796d85fb6f8951ef05b6dd08dafc"
+        "version_id": 1000170,
+        "version_string": "1.0.1",
+        "hash": "01c5ea9a87d6af7ad7dc1021254000ae"
     },
     "option_explain.foroplLcTimeout.txt": {
         "global_cache": false,
