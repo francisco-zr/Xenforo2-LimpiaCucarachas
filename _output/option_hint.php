@@ -13,6 +13,9 @@ namespace XF;
 /**
  * @property string|null $foroplLcApiKey AI API key
  * @property string|null $foroplLcApiUrl AI API endpoint URL
+ * @property bool|null $foroplLcBurstEnabled Analyze link-free messages during posting bursts
+ * @property positive-int|null $foroplLcBurstMessages Burst: messages within the window
+ * @property positive-int|null $foroplLcBurstMinutes Burst: window (minutes)
  * @property array|null $foroplLcBypassUserGroups User groups exempt from the AI check
  * @property string|null $foroplLcDomainWhitelist Whitelisted link domains
  * @property bool|null $foroplLcEnabled Limpia Cucarachas: enable AI spam check

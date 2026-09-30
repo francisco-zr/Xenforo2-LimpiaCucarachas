@@ -1,0 +1,1 @@
+Analyze link-free messages during posting bursts

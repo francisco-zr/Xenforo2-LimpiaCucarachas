@@ -1,0 +1,1 @@
+Burst: messages within the window

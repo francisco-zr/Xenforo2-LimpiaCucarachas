@@ -35,6 +35,24 @@
         "version_string": "1.0.0 Alpha",
         "hash": "eabd7d2a46428922f58b34f28654f7b3"
     },
+    "option.foroplLcBurstEnabled.txt": {
+        "global_cache": false,
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "90bc1ff8b1cce34ea1c5de3e3c55c85e"
+    },
+    "option.foroplLcBurstMessages.txt": {
+        "global_cache": false,
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "2136e21bbd51578bd385dc3a466f9862"
+    },
+    "option.foroplLcBurstMinutes.txt": {
+        "global_cache": false,
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "7d3899a0ff217077dc16ea2126b21be0"
+    },
     "option.foroplLcBypassUserGroups.txt": {
         "global_cache": false,
         "version_id": 1000770,
@@ -112,6 +130,24 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "de1044802ff030e81a251636fdaebfb8"
+    },
+    "option_explain.foroplLcBurstEnabled.txt": {
+        "global_cache": false,
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "154629f9f05a6de3ef931dc9105139eb"
+    },
+    "option_explain.foroplLcBurstMessages.txt": {
+        "global_cache": false,
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "3b7489d73e4b66a4ef6e8b6f599ea507"
+    },
+    "option_explain.foroplLcBurstMinutes.txt": {
+        "global_cache": false,
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "cace54d85c3289422b91968649393b67"
     },
     "option_explain.foroplLcBypassUserGroups.txt": {
         "global_cache": false,

@@ -1,0 +1,1 @@
+Number of messages (posts, profile posts and profile post comments) a watched user must publish within the window to be treated as a burst.

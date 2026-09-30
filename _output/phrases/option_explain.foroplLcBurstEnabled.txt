@@ -1,0 +1,1 @@
+When enabled, messages without links are also sent to the AI while a watched user is posting unusually fast. Messages with links are always analyzed.

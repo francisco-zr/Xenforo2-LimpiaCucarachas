@@ -14,6 +14,9 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 {
 	protected $requestDecisions = [];
 
+	/** @var array<int, int> */
+	protected $recentContentCounts = [];
+
 	protected function getType()
 	{
 		return 'LimpiaCucarachasAi';
@@ -75,8 +78,16 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 
 		if ($options->foroplLcRequireLink && !$this->hasSuspiciousLink($message))
 		{
-			$this->rememberDecision($checkKey, 'allowed');
-			return;
+			$burst = $this->getBurstContext($user);
+			if ($burst === null)
+			{
+				$this->rememberDecision($checkKey, 'allowed');
+				return;
+			}
+
+			// The user is flooding the forum, so analyze this link-free message
+			// and tell the AI how fast they are posting.
+			$extraParams['foropl_lc_burst'] = $burst;
 		}
 
 		try
@@ -132,6 +143,45 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		}
 
 		$this->logDecision($decision);
+	}
+
+	/**
+	 * Returns burst details when the user has published too many messages inside
+	 * the rolling window, or null when there is no burst (or the feature is off).
+	 * The count is cached per request so multiple checks do not repeat the query.
+	 */
+	protected function getBurstContext(User $user): ?array
+	{
+		$options = $this->app()->options();
+		if (empty($options->foroplLcBurstEnabled))
+		{
+			return null;
+		}
+
+		$minutes = max(1, (int) $options->foroplLcBurstMinutes);
+		$threshold = max(1, (int) $options->foroplLcBurstMessages);
+		$userId = (int) $user->user_id;
+
+		if (!isset($this->recentContentCounts[$userId]))
+		{
+			/** @var QueueRepository $queueRepo */
+			$queueRepo = $this->app()->repository(QueueRepository::class);
+			$this->recentContentCounts[$userId] = $queueRepo->getRecentContentCount(
+				$userId,
+				\XF::$time - $minutes * 60
+			);
+		}
+
+		$count = $this->recentContentCounts[$userId];
+		if ($count < $threshold)
+		{
+			return null;
+		}
+
+		return [
+			'count' => $count,
+			'minutes' => $minutes,
+		];
 	}
 
 	protected function isQueueableContentType(string $contentType): bool
@@ -407,6 +457,9 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 				. ' Classify it as spam if it is link spam, advertising, SEO spam, a scam,'
 				. ' or promotional content irrelevant to a discussion forum.'
 				. ' Legitimate posts may contain links; judge intent and context.'
+				. ' Some spammers post a rapid burst of short, link-free messages to look'
+				. ' like active members before dropping their links; treat an unnaturally'
+				. ' high posting rate as a spam signal.'
 				. ' Respond with ONLY a JSON object, no other text:'
 				. ' {"spam": true or false, "reason": "brief explanation, max 200 characters"}';
 		}
@@ -417,8 +470,16 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		$userPrompt = 'Username: ' . $user->username . "\n"
 			. 'Account age: ' . $accountAgeDays . " days\n"
 			. 'Messages posted: ' . $user->message_count . "\n"
-			. 'Content type: ' . ($extraParams['content_type'] ?? 'unknown') . "\n"
-			. "Message:\n---\n" . $truncated;
+			. 'Content type: ' . ($extraParams['content_type'] ?? 'unknown') . "\n";
+
+		$burst = $extraParams['foropl_lc_burst'] ?? null;
+		if (is_array($burst))
+		{
+			$userPrompt .= 'Posting rate: ' . (int) ($burst['count'] ?? 0) . ' messages in the last '
+				. (int) ($burst['minutes'] ?? 0) . " minutes\n";
+		}
+
+		$userPrompt .= "Message:\n---\n" . $truncated;
 
 		return [
 			['role' => 'system', 'content' => $systemPrompt],

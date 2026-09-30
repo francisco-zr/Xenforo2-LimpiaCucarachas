@@ -16,6 +16,10 @@ When a **recently registered account** posts a message **containing a link**, th
 
 If a recent account already has several messages sitting in the moderation queue, further submissions are **blocked outright** — no AI call needed.
 
+### Posting bursts
+
+A determined spammer may post a burst of short, link-free messages to look like an active member before dropping their links. When a watched account exceeds a configurable number of messages within a rolling window (10 in 15 minutes by default), those link-free messages are also sent to the AI, with the posting rate included in the prompt.
+
 ### Closes the message-count loophole — and catches dormant accounts
 
 XenForo only spam-checks users below the *"Maximum messages to check for spam"* threshold, which spammers bypass by posting a few innocent messages first. This add-on keeps all spam checks active (including your spam phrases and Akismet, if configured) for a configurable number of days **counted from the user's first message**, regardless of message count.
@@ -30,7 +34,7 @@ Works with **any OpenAI-compatible chat completions API**. Just set the endpoint
 - **DeepSeek** (`https://api.deepseek.com/chat/completions`, model `deepseek-chat`) — extremely cheap per-call pricing.
 - OpenRouter, OpenAI, or any other compatible endpoint.
 
-Since the AI is only called for recent accounts posting links, a typical forum makes a handful of calls per day — cost is effectively zero.
+Since the AI is only called for recent accounts posting links (or posting in a burst), a typical forum makes a handful of calls per day — cost is effectively zero.
 
 ### Tamper-evident moderation
 
@@ -51,10 +55,10 @@ All thresholds are configurable under **Admin CP → Options → [ForoPL] Limpia
 - Days to watch after a user's first message
 - Queued messages before blocking
 - Only check messages containing links (on/off)
+- Analyze link-free messages during posting bursts, and the message count / window
 - User groups exempt from the AI check
 - API endpoint URL, key and model
 - Request timeout, response token budget, message truncation
-- Log retention (days)
 - Custom system prompt (advanced)
 
 ## Performance

@@ -1,0 +1,1 @@
+Rolling window, in minutes, used to measure posting speed. Example: 10 messages in 15 minutes.

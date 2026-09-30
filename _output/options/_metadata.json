@@ -5,6 +5,15 @@
     "foroplLcApiUrl.json": {
         "hash": "5df9a3848f234f109fcf0db6ec2dcc5b"
     },
+    "foroplLcBurstEnabled.json": {
+        "hash": "d465398763c06d240a22b9b68b2077bb"
+    },
+    "foroplLcBurstMessages.json": {
+        "hash": "2588137967da2e88caf21d94de0316de"
+    },
+    "foroplLcBurstMinutes.json": {
+        "hash": "37b3b19f5f7fad884bc807fef7759a8c"
+    },
     "foroplLcBypassUserGroups.json": {
         "hash": "5f7541904ed1fd53ac572171228c745f"
     },
