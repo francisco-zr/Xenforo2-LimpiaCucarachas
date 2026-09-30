@@ -1,0 +1,13 @@
+{
+    "edit_format": "select",
+    "edit_format_params": "moderate={{ phrase('foropl_lc_media_action_moderate') }}\nanalyze={{ phrase('foropl_lc_media_action_analyze') }}\nignore={{ phrase('foropl_lc_media_action_ignore') }}",
+    "data_type": "string",
+    "sub_options": [],
+    "validation_class": "",
+    "validation_method": "",
+    "advanced": false,
+    "default_value": "moderate",
+    "relations": {
+        "foroplLc": 74
+    }
+}

@@ -17,6 +17,30 @@
         "version_string": "1.0.0",
         "hash": "e086673b35b8179446782adf7bd8d750"
     },
+    "foropl_lc_media_action_analyze.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "44f1a1493bd4081a1333067957361f25"
+    },
+    "foropl_lc_media_action_ignore.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "20cac2bdbf6687a4dc722652bc84f0bd"
+    },
+    "foropl_lc_media_action_moderate.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "8fe36c080e889ff207154333175b6713"
+    },
+    "foropl_lc_media_held.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "60471180168289d3262f759a19f8062e"
+    },
     "foropl_lc_queue_flood.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -95,6 +119,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "c2c614b47f975909d8709aa002c906e0"
     },
+    "option.foroplLcMediaAction.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "eafa3fd8632c2e57ab2620695612166e"
+    },
     "option.foroplLcModel.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -118,6 +148,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "ea50734f5b06924f3958de67e0f14fe8"
+    },
+    "option.foroplLcTrustedMediaSites.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "8733ddd272ad9affc2e4da0448f7750b"
     },
     "option_explain.foroplLcApiKey.txt": {
         "global_cache": false,
@@ -191,6 +227,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "93a68d4f371124448b278abe79354f99"
     },
+    "option_explain.foroplLcMediaAction.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "8e13dbb48c5d73bc487b4c7aab4b4b0a"
+    },
     "option_explain.foroplLcModel.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -214,6 +256,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "184b3ac4350526da1a89bc0cceb4cf4f"
+    },
+    "option_explain.foroplLcTrustedMediaSites.txt": {
+        "global_cache": false,
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "041825305924513422f67ce8296ed104"
     },
     "option_group.foroplLc.txt": {
         "global_cache": false,

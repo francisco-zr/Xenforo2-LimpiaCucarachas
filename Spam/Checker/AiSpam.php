@@ -12,6 +12,11 @@ use XF\Spam\Checker\ContentCheckerInterface;
 
 class AiSpam extends AbstractProvider implements ContentCheckerInterface
 {
+	const DEFAULT_TRUSTED_MEDIA_SITES = [
+		'youtube', 'vimeo', 'dailymotion', 'twitch', 'soundcloud',
+		'spotify', 'applemusic', 'giphy', 'imgur', 'flickr',
+	];
+
 	protected $requestDecisions = [];
 
 	/** @var array<int, int> */
@@ -76,6 +81,22 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			}
 		}
 
+		$mediaSite = $this->getUntrustedMediaSite($message);
+		$mediaAction = (string) ($options->foroplLcMediaAction ?: 'moderate');
+
+		// The AI cannot see the content hidden inside an embed (for example a
+		// tweet carrying a promotional link), so untrusted media from a watched
+		// account is held for a moderator to review instead.
+		if ($mediaSite !== null
+			&& $mediaAction === 'moderate'
+			&& $this->isQueueableContentType($contentType)
+		)
+		{
+			$this->rememberDecision($checkKey, 'moderated');
+			$this->logDetail('foropl_lc_media_held', ['site' => $mediaSite]);
+			return;
+		}
+
 		if ($options->foroplLcRequireLink && !$this->hasSuspiciousLink($message))
 		{
 			$burst = $this->getBurstContext($user);
@@ -88,6 +109,11 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			// The user is flooding the forum, so analyze this link-free message
 			// and tell the AI how fast they are posting.
 			$extraParams['foropl_lc_burst'] = $burst;
+		}
+
+		if ($mediaSite !== null && $mediaAction !== 'ignore')
+		{
+			$extraParams['foropl_lc_media'] = $mediaSite;
 		}
 
 		try
@@ -247,7 +273,55 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 			}
 		}
 
+		// An embed such as [MEDIA=twitter]123[/MEDIA] carries no URL in the
+		// message, so it would otherwise slip past the link checks entirely.
+		if ($this->app()->options()->foroplLcMediaAction !== 'ignore'
+			&& $this->getUntrustedMediaSite($message) !== null)
+		{
+			return true;
+		}
+
 		return false;
+	}
+
+	/**
+	 * Returns the first embedded media site that is not on the trusted list, or
+	 * null when the message has no (untrusted) media embed.
+	 */
+	protected function getUntrustedMediaSite(string $message): ?string
+	{
+		if (!preg_match_all('#\[MEDIA=([a-z0-9_]+)\]#i', $message, $matches))
+		{
+			return null;
+		}
+
+		$trusted = $this->getTrustedMediaSites();
+
+		foreach ($matches[1] AS $site)
+		{
+			$site = strtolower($site);
+			if (!in_array($site, $trusted, true))
+			{
+				return $site;
+			}
+		}
+
+		return null;
+	}
+
+	protected function getTrustedMediaSites(): array
+	{
+		$sites = [];
+		foreach (preg_split('/\r?\n/', (string) $this->app()->options()->foroplLcTrustedMediaSites) AS $line)
+		{
+			$line = strtolower(trim($line));
+			if ($line !== '')
+			{
+				$sites[] = $line;
+			}
+		}
+
+		return $sites ?: self::DEFAULT_TRUSTED_MEDIA_SITES;
 	}
 
 	protected function isWhitelistedUrl(string $url, array $whitelist): bool
@@ -460,6 +534,10 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 				. ' Some spammers post a rapid burst of short, link-free messages to look'
 				. ' like active members before dropping their links; treat an unnaturally'
 				. ' high posting rate as a spam signal.'
+				. ' A message may embed external media such as a tweet'
+				. ' ([MEDIA=twitter]...[/MEDIA]), which can hide promotional links inside'
+				. ' the embedded post; from a recently registered account, treat such'
+				. ' embeds with suspicion.'
 				. ' Respond with ONLY a JSON object, no other text:'
 				. ' {"spam": true or false, "reason": "brief explanation, max 200 characters"}';
 		}
@@ -477,6 +555,12 @@ class AiSpam extends AbstractProvider implements ContentCheckerInterface
 		{
 			$userPrompt .= 'Posting rate: ' . (int) ($burst['count'] ?? 0) . ' messages in the last '
 				. (int) ($burst['minutes'] ?? 0) . " minutes\n";
+		}
+
+		$media = $extraParams['foropl_lc_media'] ?? null;
+		if (is_string($media) && $media !== '')
+		{
+			$userPrompt .= 'Embedded media: ' . $media . "\n";
 		}
 
 		$userPrompt .= "Message:\n---\n" . $truncated;

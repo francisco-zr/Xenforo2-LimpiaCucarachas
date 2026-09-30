@@ -35,6 +35,9 @@
     "foroplLcMaxTokens.json": {
         "hash": "5ecf8580f74e156776164ecd5871129b"
     },
+    "foroplLcMediaAction.json": {
+        "hash": "879272ffc4afda349b2d3f9b41d4db66"
+    },
     "foroplLcModel.json": {
         "hash": "2d9a00ad31076acb67f64b275ee9caa8"
     },
@@ -46,5 +49,8 @@
     },
     "foroplLcTimeout.json": {
         "hash": "1a4c6e96fa9ad0b3b7ca4bcad171cedf"
+    },
+    "foroplLcTrustedMediaSites.json": {
+        "hash": "3ad44fc16a4223dc9a2974a3aca94ae4"
     }
 }

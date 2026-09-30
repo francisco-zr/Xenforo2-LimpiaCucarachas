@@ -1,0 +1,1 @@
+One media site ID per line, e.g. youtube. Embeds from these sites are not treated as suspicious. If cleared, the built-in list of harmless video, audio and image platforms is used.

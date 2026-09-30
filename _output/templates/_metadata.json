@@ -8,5 +8,10 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "7e0147722ad2000fc7600537bfc05884"
+    },
+    "admin/option_template_foroplLcTrustedMediaSites.html": {
+        "version_id": 1000270,
+        "version_string": "1.0.2",
+        "hash": "365b2a0a8eb7e16f7a5a37742aad726e"
     }
 }

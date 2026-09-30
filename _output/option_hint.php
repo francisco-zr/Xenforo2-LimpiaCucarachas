@@ -23,10 +23,12 @@ namespace XF;
  * @property positive-int|null $foroplLcMaxChars Maximum message length sent to AI
  * @property positive-int|null $foroplLcMaxQueuedMessages Maximum queued messages before blocking
  * @property positive-int|null $foroplLcMaxTokens Maximum AI response tokens
+ * @property string|null $foroplLcMediaAction Media embeds in watched accounts
  * @property string|null $foroplLcModel AI model
  * @property bool|null $foroplLcRequireLink Only check messages containing links
  * @property string|null $foroplLcSystemPrompt Custom AI system prompt
  * @property positive-int|null $foroplLcTimeout AI request timeout
+ * @property string|null $foroplLcTrustedMediaSites Trusted media sites
  */
 class Options
 {

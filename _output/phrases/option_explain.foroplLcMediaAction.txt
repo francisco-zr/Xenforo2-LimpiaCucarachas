@@ -1,0 +1,1 @@
+How to handle messages from watched accounts that embed external media such as a tweet. The AI cannot see the content hidden inside the embed, so holding them for a moderator is the safest option.

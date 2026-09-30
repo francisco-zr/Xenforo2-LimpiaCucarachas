@@ -20,6 +20,10 @@ If a recent account already has several messages sitting in the moderation queue
 
 A determined spammer may post a burst of short, link-free messages to look like an active member before dropping their links. When a watched account exceeds a configurable number of messages within a rolling window (10 in 15 minutes by default), those link-free messages are also sent to the AI, with the posting rate included in the prompt.
 
+### Media embeds
+
+A spammer can hide a link inside an embedded social media post — for example `[MEDIA=twitter]2044…[/MEDIA]` — which carries no URL in the message text and would otherwise skip the check. On watched accounts, untrusted media embeds are **held for a moderator to review**, because the AI cannot see inside the embed. Harmless platforms (YouTube, Vimeo, Dailymotion, Twitch, SoundCloud, Spotify, Apple Music, Giphy, Imgur, Flickr) are trusted by default; you can also choose to let the AI analyse them instead, or turn media handling off.
+
 ### Closes the message-count loophole — and catches dormant accounts
 
 XenForo only spam-checks users below the *"Maximum messages to check for spam"* threshold, which spammers bypass by posting a few innocent messages first. This add-on keeps all spam checks active (including your spam phrases and Akismet, if configured) for a configurable number of days **counted from the user's first message**, regardless of message count.
@@ -56,6 +60,7 @@ All thresholds are configurable under **Admin CP → Options → [ForoPL] Limpia
 - Queued messages before blocking
 - Only check messages containing links (on/off)
 - Analyze link-free messages during posting bursts, and the message count / window
+- Media embeds: hold for review / analyse with the AI / ignore, and the trusted media sites
 - User groups exempt from the AI check
 - API endpoint URL, key and model
 - Request timeout, response token budget, message truncation
