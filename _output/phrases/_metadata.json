@@ -13,8 +13,8 @@
     },
     "foropl_lc_edited_after_flag.txt": {
         "global_cache": false,
-        "version_id": 1000370,
-        "version_string": "1.0.3",
+        "version_id": 1000070,
+        "version_string": "1.0.0",
         "hash": "e086673b35b8179446782adf7bd8d750"
     },
     "foropl_lc_queue_flood.txt": {
@@ -55,9 +55,9 @@
     },
     "option.foroplLcBypassUserGroups.txt": {
         "global_cache": false,
-        "version_id": 1000770,
-        "version_string": "1.0.7",
-        "hash": "ff993899e2235de27917e81bb27ffef9"
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "056d0da0d927b4b845a3a0638fbe87b9"
     },
     "option.foroplLcDomainWhitelist.txt": {
         "global_cache": false,
@@ -151,9 +151,9 @@
     },
     "option_explain.foroplLcBypassUserGroups.txt": {
         "global_cache": false,
-        "version_id": 1000770,
-        "version_string": "1.0.7",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "bcbdc91f62768607489b80c24902ed57"
     },
     "option_explain.foroplLcDomainWhitelist.txt": {
         "global_cache": false,
