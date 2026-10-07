@@ -24,6 +24,10 @@ A determined spammer may post a burst of short, link-free messages to look like 
 
 A spammer can hide a link inside an embedded social media post — for example `[MEDIA=twitter]2044…[/MEDIA]` — which carries no URL in the message text and would otherwise skip the check. On watched accounts, untrusted media embeds are **held for a moderator to review**, because the AI cannot see inside the embed. Harmless platforms (YouTube, Vimeo, Dailymotion, Twitch, SoundCloud, Spotify, Apple Music, Giphy, Imgur, Flickr) are trusted by default; you can also choose to let the AI analyse them instead, or turn media handling off.
 
+### Prompt-injection resistance
+
+The username and the message are untrusted content: the add-on wraps them in a clearly delimited block, and the built-in prompt instructs the model to treat anything found inside — "ignore previous instructions" tricks, fake system notes, forged verdicts — as message text to classify, not commands to follow. Trying to instruct the model is itself treated as a spam signal. The AI response is confined to one JSON verdict (a boolean plus a short reason), so even a hijacked answer can at most misclassify a single message: there are no tools to invoke and no data channel beyond the text the add-on already sends. If you write your own system prompt, keep this instruction (see the option description).
+
 ### Closes the message-count loophole — and catches dormant accounts
 
 XenForo only spam-checks users below the *"Maximum messages to check for spam"* threshold, which spammers bypass by posting a few innocent messages first. This add-on keeps all spam checks active (including your spam phrases and Akismet, if configured) for a configurable number of days **counted from the user's first message**, regardless of message count.
@@ -64,7 +68,7 @@ All thresholds are configurable under **Admin CP → Options → [ForoPL] Limpia
 - User groups exempt from the AI check
 - API endpoint URL, key and model
 - Request timeout, response token budget, message truncation
-- Custom system prompt (advanced)
+- Custom system prompt (advanced; if you customise it, keep the injection-protection instruction — see the option description)
 
 ## Performance
 
