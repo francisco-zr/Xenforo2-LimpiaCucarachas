@@ -1,5 +1,7 @@
 # Xenforo2-[ForoPL] Limpia Cucarachas
 
+Licensed under the [MIT license](LICENSE).
+
 A XenForo 2.3 add-on that stops the classic overnight spammer: a fresh account posts a few harmless messages to get past XenForo's spam checks, then floods the forum with link spam until a moderator wakes up.
 
 It uses an AI model to judge suspicious messages — with near-zero cost and zero impact on normal traffic.
